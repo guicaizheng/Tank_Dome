@@ -37,10 +37,12 @@ namespace Tank_Dome
             mytank.Direct = 0;
             DragWall(pictureBox1.CreateGraphics());
         }
+       
         private void DragWall(Graphics g)
         {
             Image Wallimage = Image.FromFile("0.jpg");
             Point p = new Point(0, 0);
+            //pictureBox1.Image = Wallimage;
             g.DrawImage(Wallimage,p);
             for (int x = 0; x < 10; x++)
                 for (int y = 0; y < 10; y++)
