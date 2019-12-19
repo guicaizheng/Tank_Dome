@@ -15,7 +15,6 @@ namespace Tank_Dome
         public Form1()
         {
             InitializeComponent();
-            test();
         }
     }
 }

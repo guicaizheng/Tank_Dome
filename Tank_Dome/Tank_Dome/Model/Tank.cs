@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tank_Dome.Model;
 
 namespace Tank_Dome
 {
@@ -65,5 +67,39 @@ namespace Tank_Dome
             this.top = r.Next(0, 10);   //0-9
             this.type = tank_type;
         }
+
+        public void newDirect()
+        {
+            Random r = new Random();
+            int new_Direct = r.Next(0, 4);
+            while (this.direct == new_Direct)
+                new_Direct = r.Next(0, 4);
+            this.direct = new_Direct;
+        }
+
+        public void Draw(Graphics g,int type)
+        {
+            Image tank = Image.FromFile("");
+            Rectangle destRect = new Rectangle(this.left * width, this.top * height, width, height);
+            Rectangle srcRect = new Rectangle(direct * width, 0, width, height);
+            g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
+        }
+
+        public void Exploer(Graphics g)
+        {
+            Rectangle destRect = new Rectangle(this.left * width, this.top * height, width, height);
+            Rectangle srcRect = new Rectangle(0, 0, width, height);
+            Image tank = Image.FromFile("");
+            g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
+
+        }
+        //public void fire()
+        //{
+        //    bullet b = new bullet(this.type);
+            
+
+
+        //}
+
     }
 }
