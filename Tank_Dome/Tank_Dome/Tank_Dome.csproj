@@ -82,7 +82,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="source\picTank\" />
+    <Folder Include="source\Sound\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="source\0.jpg" />
   </ItemGroup>

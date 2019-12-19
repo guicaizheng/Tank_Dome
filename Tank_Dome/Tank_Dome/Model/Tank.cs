@@ -79,20 +79,24 @@ namespace Tank_Dome
 
         public void Draw(Graphics g, int type)
         {
-            Image tank = Image.FromFile("");
+            Image tank = Image.FromFile(@"F:\College_Data\.Net\Tank_Dome\Tank_Dome\Tank_Dome\source\0.jpg");
+
             Rectangle destRect = new Rectangle(this.left * width, this.top * height, width, height);
             Rectangle srcRect = new Rectangle(direct * width, 0, width, height);
             g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
         }
 
-        public void Exploer(Graphics g)
+        public void Explore(Graphics g)
         {
             Rectangle destRect = new Rectangle(this.left * width, this.top * height, width, height);
             Rectangle srcRect = new Rectangle(0, 0, width, height);
-            Image tank = Image.FromFile("");
+            Image tank = Image.FromFile(@"F:\College_Data\.Net\Tank_Dome\Tank_Dome\Tank_Dome\source\0.jpg");
             g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
 
+            //PlaySound.Play("Sound/Explode.wav");
+
         }
+
         public void fire()
         {
             bullet b = new bullet(this.type);
@@ -100,8 +104,9 @@ namespace Tank_Dome
             b.Top = this.Top;
             b.Left = this.Left;
             bList.Add(b);
-            // if (this.type == 6) PlaySound.Play("Sound/Shoot.wav");
+            //if (this.type == 6) PlaySound.Play("Sound/Shoot.wav");
         }
+
         public void MoveBullet(ref int[,] Map)
         {
             for (int i = bList.Count - 1; 1 >= 0; i--)//遍历子弹序列
@@ -136,12 +141,13 @@ namespace Tank_Dome
                     continue;
                 }
             }
-            //public void DrawBullet(Graphics g,int [,] Map)
-            //{
-            //    MoveBullet(ref Map);
-            //    foreach (bullet t in bList)
-            //        t.Draw(g);
-            //}
+        }
+
+        public void DrawBullet(Graphics g, int[,] Map)
+        {
+            MoveBullet(ref Map);
+            foreach (bullet t in bList)
+                t.Draw(g);
         }
     }
 }
