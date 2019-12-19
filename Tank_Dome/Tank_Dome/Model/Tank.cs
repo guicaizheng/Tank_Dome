@@ -93,54 +93,55 @@ namespace Tank_Dome
             g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
 
         }
-        //public void fire()
-        //{
-        //    bullet b = new bullet(this.type);
-        //b.Direct = this.Direct;
-        //b.Top = this.Top;
-        //b.Left = this.Left;
-        //bList.Add(b);
-        //if(this.type == 6) PlaySound.Play("Sound/Shoot.wav");
-        //}
-        //public void MoveBullet(ref int[,] Map)
-        //{
-        //    for (int i = blist.Count - 1; 1 >= 0; i--)//遍历子弹序列
-        //                                              //for(int i= 0; i<bList.ComCount;i++ )
-        //    {
-        //        bullet t = ((bullet)bList[i]);
-        //        //移动以前
-        //        if (t.Left < 0 || t.Left > 9 || t.Top < 0 || t.Top > 9)
-        //        //超出边界
-        //        {
-        //            bList.RemoveAt(i); continue;
-        //        }
-        //        if (Map[t.left, t.top] != 0 && Map[t.left, t.top] != this.type)
-        //        {
-        //            bList.RemoveAt(1);
-        //            if (t.hitE(Map[t.Left, t.Top]))
-        //                Map[t.Left, t.Top] = -1;
-        //            continue;
-        //        }
-        //        t.move();
-        //        if(t.Left<0 || t.Left>9|| t.Top<0 ||t.Top>9)
-        //        //超出边界
-        //        {
-        //            bList.RemoveAt(i); continue;
-        //        }
-        //        if (Map[t.Left, t.Top]!= 0)
-        //        //遇到物体
-        //        {
-        //            bList.RemoveAt(i);
-        //            if (t.hitE(Map[t.Left, t.Top]))
-        //                Map[t.Left, t.Top] = -1;
-        //            continue;
-        //        }
-        //    }
-        //public void DrawBullet(Graphics g,int [,] Map)
-        //{
-        //    MoveBullet(ref Map);
-        //    foreach (bullet t in bList)
-        //        t.Draw(g);
-        //}
+        public void fire()
+        {
+            bullet b = new bullet(this.type);
+            b.Direct = this.Direct;
+            b.Top = this.Top;
+            b.Left = this.Left;
+            bList.Add(b);
+            // if (this.type == 6) PlaySound.Play("Sound/Shoot.wav");
+        }
+        public void MoveBullet(ref int[,] Map)
+        {
+            for (int i = bList.Count - 1; 1 >= 0; i--)//遍历子弹序列
+                                                      //for(int i= 0; i<bList.ComCount;i++ )
+            {
+                bullet t = ((bullet)bList[i]);
+                //移动以前
+                if (t.Left < 0 || t.Left > 9 || t.Top < 0 || t.Top > 9)
+                //超出边界
+                {
+                    bList.RemoveAt(i); continue;
+                }
+                if (Map[t.Left, t.Top] != 0 && Map[t.Left, t.Top] != this.type)
+                {
+                    bList.RemoveAt(1);
+                    if (t.hitE(Map[t.Left, t.Top]))
+                        Map[t.Left, t.Top] = -1;
+                    continue;
+                }
+                t.move();
+                if (t.Left < 0 || t.Left > 9 || t.Top < 0 || t.Top > 9)
+                //超出边界
+                {
+                    bList.RemoveAt(i); continue;
+                }
+                if (Map[t.Left, t.Top] != 0)
+                //遇到物体
+                {
+                    bList.RemoveAt(i);
+                    if (t.hitE(Map[t.Left, t.Top]))
+                        Map[t.Left, t.Top] = -1;
+                    continue;
+                }
+            }
+            //public void DrawBullet(Graphics g,int [,] Map)
+            //{
+            //    MoveBullet(ref Map);
+            //    foreach (bullet t in bList)
+            //        t.Draw(g);
+            //}
+        }
     }
 }
