@@ -17,19 +17,5 @@ namespace Tank_Dome
             InitializeComponent();
             test();
         }
-        public void test()
-        {
-            Graphics g;
-            MessageBox.Show("1");
-            g = this.CreateGraphics();
-            Image tank = Image.FromFile("0.jpg");
-            pictureBox1.Image = tank;
-            Rectangle a = new Rectangle(100, 100, 100, 100);
-            Rectangle b = new Rectangle(100, 100, 100, 100);
-            Point p = new Point(100, 100);
-            g.DrawImage(tank,p);
-            
-        }
-
     }
 }
