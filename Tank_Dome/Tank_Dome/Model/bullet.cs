@@ -13,7 +13,8 @@ namespace Tank_Dome.Model
         private int left;
         private int direct;         //子弹的行进方向
         private int width = 32;
-        private int height = 32;        private bool type;          //已方子弹为true,敌方子弹为false
+        private int height = 32;
+        private bool type;          //已方子弹为true,敌方子弹为false
 
         public bullet(int type)     //子弹类构造函数
         {
@@ -30,10 +31,14 @@ namespace Tank_Dome.Model
         public void Draw(Graphics g)
         {
             Image bulletImage;
-            if (type == true)                bulletImage = Image.FromFile("aaaaaaaaa");  //己方子弹            else                bulletImage = Image.FromFile("bbbbbbbbbb"); //敌方子弹
+            if (type == true)
+                bulletImage = Image.FromFile("aaaaaaaaa");  //己方子弹
+            else
+                bulletImage = Image.FromFile("bbbbbbbbbb"); //敌方子弹
 
             //得到绘制这个子弹图形的矩形区城
-            Rectangle destRect = new Rectangle(left * width, top * height, width, height);            Rectangle srcRect = new Rectangle(0, 0, width, height);
+            Rectangle destRect = new Rectangle(left * width, top * height, width, height);
+            Rectangle srcRect = new Rectangle(0, 0, width, height);
             g.DrawImage(bulletImage, destRect, srcRect, GraphicsUnit.Pixel);
         }
 
