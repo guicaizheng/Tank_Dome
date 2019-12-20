@@ -28,24 +28,26 @@ namespace Tank_Dome
 
         private Tank MyTank = new Tank(6);      //己方坦克为6
         private int width = 60;
-        private int[,] Map = new int[10, 10];   //墙砖地图
-        private int[,] TMap = new int[10, 10];  //坦克，墙砖地图
+        MapModel Map = new MapModel(1);
+        //private int[,] Map = new int[13, 13];   //墙砖地图
+        private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
         private int Score = 0;
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
-            pictureBox1.Width = 10 * width;
-            pictureBox1.Height = 10 * width;
+            pictureBox1.Width = 13 * width;
+            pictureBox1.Height = 13 * width;
             path = Application.StartupPath;
-            Random r = new Random();
-            for(int x=0;x<10;x+=2)
-                for(int y=0;y<10;y+=2)
-                {
-                    //0表示空地,1表示墙砖
-                    Map[x, y] = r.Next(0, 2);
-                }
-            Map[4, 9] = 0;
-            MyTank.Top = 9;
+            //Random r = new Random();
+            //for(int x=0;x<13;x+=2)
+            //    for(int y=0;y<13;y+=2)
+            //    {
+            //        //0表示空地,1表示墙砖
+            //        Map[x, y] = r.Next(0, 2);
+            //    }
+           
+            Map.Map1[4, 12] = 0;
+            MyTank.Top = 12;
             MyTank.Left = 4;
             MyTank.Direct = 0;
             label1.Text = "X:" + MyTank.Left + "Y:" + MyTank.Top;
@@ -54,10 +56,10 @@ namespace Tank_Dome
         private void DragWall(Graphics g)   //画游戏地图
         {
             Image Wallimage = Image.FromFile("source\\Map.png");
-            for (int x = 0; x < 10; x++)
-                for (int y = 0; y < 10; y++)
+            for (int x = 0; x < 13; x++)
+                for (int y = 0; y < 13; y++)
                 {
-                    if(Map[x,y]==1)
+                    if(Map.Map1[x,y]==1)
                     {
                         //绘制这个墙砖块的矩形区域
                         Rectangle Rect = new Rectangle(x * width, y * width, width, width);
@@ -71,7 +73,7 @@ namespace Tank_Dome
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    if (MyTank.Top == 0 || Map[MyTank.Left, MyTank.Top - 1] == 1
+                    if (MyTank.Top == 0 || Map.Map1[MyTank.Left, MyTank.Top - 1] == 1
                     || Meet_Tank(MyTank.Left, MyTank.Top - 1))      //遇到墙砖或坦克
                         ;                                       //不动
                     else
@@ -81,7 +83,7 @@ namespace Tank_Dome
                     }  
                     break;
                 case Keys.S:                                 //下
-                    if (MyTank.Top == 9 || Map[MyTank.Left, MyTank.Top + 1] == 1
+                    if (MyTank.Top == 9 || Map.Map1[MyTank.Left, MyTank.Top + 1] == 1
                     || Meet_Tank(MyTank.Left, MyTank.Top + 1))  //遇到墙砖或坦克
                         ;                                       //不动
                     else
@@ -91,7 +93,7 @@ namespace Tank_Dome
                     }
                     break;
                 case Keys.A:                                 //左
-                    if(MyTank.Left == 0 || Map[MyTank.Left - 1, MyTank.Top] == 1
+                    if(MyTank.Left == 0 || Map.Map1[MyTank.Left - 1, MyTank.Top] == 1
                     || Meet_Tank(MyTank.Left - 1, MyTank.Top))	//遇到墙砖或坦克
 				        ;										//不动
 			        else
@@ -101,7 +103,7 @@ namespace Tank_Dome
                     } 
                     break;
                 case Keys.D:                                //右
-                    if (MyTank.Left == 9 || Map[MyTank.Left + 1, MyTank.Top] == 1
+                    if (MyTank.Left == 9 || Map.Map1[MyTank.Left + 1, MyTank.Top] == 1
                     || Meet_Tank(MyTank.Left + 1, MyTank.Top))  //遇到墙砖或坦克
                         ;                                       //不动
                     else
@@ -137,11 +139,13 @@ namespace Tank_Dome
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             //修改含坦克信息的地图
-            for(int x = 0; x < 10; x++)
-                for(int y = 0; y < 10; y++)
+            for(int x = 0; x < 13; x++)
+                for(int y = 0; y < 13; y++)
                 {
-                    if (Map[x, y] == 1)
+                    if (Map.Map1[x, y] == 1)
                         TMap[x, y] = 1;         //墙砖
+                    else if (Map.Map1[x, y] == 2)
+                        TMap[x, y] = 2;
                     else
                         TMap[x, y] = 0;         //0表示空地
                 }
@@ -213,28 +217,28 @@ namespace Tank_Dome
                 switch (t.Direct)           //0表示上，1表示下,2表示左,3表示右
                 {
                     case 0:                 //向上
-                    if (t.Top == 0 || Map[t.Left,t.Top - 1] == 1
+                    if (t.Top == 0 || Map.Map1[t.Left,t.Top - 1] == 1
                     || Meet_Tank(t.Left, t.Top - 1)) //遇到墙砖或坦克
                         t.newDirect();              //坦克转向
                     else
                         t.Top--;
                     break;
                     case 1 :                                //向下
-                        if (t.Top == 9 || Map[t.Left, t.Top + 1] == 1
+                        if (t.Top == 9 || Map.Map1[t.Left, t.Top + 1] == 1
                         || Meet_Tank(t.Left, t.Top + 1))    //遇到墙砖或坦克
                             t.newDirect();                  //坦克转向
                         else 
                             t.Top++;
                         break;
                     case 2:                                 //向左
-                        if (t.Left == 0 || Map[t.Left - 1, t.Top] == 1
+                        if (t.Left == 0 || Map.Map1[t.Left - 1, t.Top] == 1
                          | Meet_Tank(t.Left - 1, t.Top))    //遇 到墙砖或坦克
                             t.newDirect();                  //坦克转向
                         else
                             t.Left--;
                         break;
                     case 3:                                 //向右
-                        if (t.Left == 9 || Map[t.Left + 1, t.Top] == 1
+                        if (t.Left == 9 || Map.Map1[t.Left + 1, t.Top] == 1
                         || Meet_Tank(t.Left + 1, t.Top)) //遇到墙砖或坦克
                             t.newDirect();            //坦克转向
                         else
