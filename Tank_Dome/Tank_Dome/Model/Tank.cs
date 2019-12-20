@@ -57,14 +57,15 @@ namespace Tank_Dome
         }
         public int Direct { get => direct; set => direct = value; }//坦克方向
 
-        public Tank(int tank_type)//产生随机方向
+        public Tank(int tank_type,int left,int top)//产生随机方向
         {
             Random r = new Random();
+
             this.direct = r.Next(0, 4); //0-3
-            this.width = 60;
-            this.height = 60;
-            this.left = r.Next(0, 10);  //0-9
-            this.top = r.Next(0, 10);   //0-9
+            this.width = 30;
+            this.height = 30;
+            this.left = left;//0-9
+            this.top = top;//0-9
             this.type = tank_type;
         }
 
@@ -79,27 +80,27 @@ namespace Tank_Dome
 
         public void Draw(Graphics g, int type)
         {
-            Image tank = Image.FromFile("source\\mytank0.png");
+            Image tank = Image.FromFile("image\\mytank0.png");
          
-            if (type == 2) tank = Image.FromFile(@"2.jpg");
-            if (type == 3) tank = Image.FromFile(@"2.jpg");
-            if (type == 4) tank = Image.FromFile(@"2.jpg");
-            if (type == 5) tank = Image.FromFile(@"2.jpg");
+            if (type == 2) tank = Image.FromFile(@"image\\tank0.png");
+            if (type == 3) tank = Image.FromFile(@"image\\tank0.png");
+            if (type == 4) tank = Image.FromFile(@"image\\tank0.png");
+            if (type == 5) tank = Image.FromFile(@"image\\tank0.png");
             if (type == 6)
             {
                 switch (direct)
                 {
                     case 0:
-                        tank = Image.FromFile("source\\mytank0.png");
+                        tank = Image.FromFile("image\\mytank0.png");
                         break;
                     case 1:
-                        tank = Image.FromFile("source\\mytank1.png");
+                        tank = Image.FromFile("image\\mytank1.png");
                         break;
                     case 2:
-                        tank = Image.FromFile("source\\mytank2.png");
+                        tank = Image.FromFile("image\\mytank2.png");
                         break;
                     case 3:
-                        tank = Image.FromFile("source\\mytank3.png");
+                        tank = Image.FromFile("image\\mytank3.png");
                         break;
                 }
             }
@@ -112,7 +113,7 @@ namespace Tank_Dome
         {
             Rectangle destRect = new Rectangle(this.left * width, this.top * height, width, height);
             Rectangle srcRect = new Rectangle(0, 0, width, height);
-            Image tank = Image.FromFile(@"F:\.NET\Coursedesign\Tank_Dome\Tank_Dome\source\0.jpg");
+            Image tank = Image.FromFile(@"image\\base2.png");
             g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
 
             //PlaySound.Play("Sound/Explode.wav");
@@ -136,7 +137,7 @@ namespace Tank_Dome
             {
                 bullet t = ((bullet)bList[i]);
                 //移动以前
-                if (t.Left < 0 || t.Left > 9 || t.Top < 0 || t.Top > 9)
+                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)
                 //超出边界
                 {
                     bList.RemoveAt(i); continue;
@@ -149,7 +150,7 @@ namespace Tank_Dome
                     continue;
                 }
                 t.move();
-                if (t.Left < 0 || t.Left > 9 || t.Top < 0 || t.Top > 9)
+                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)
                 //超出边界
                 {
                     bList.RemoveAt(i); continue;
