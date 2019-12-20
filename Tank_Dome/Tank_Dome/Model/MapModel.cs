@@ -11,7 +11,7 @@ namespace Tank_Dome.Model
         int Maptyep=0;
         private int[,] Map = new int[10, 10];   //墙砖地图
         private int[,] TMap = new int[10, 10];  //坦克，墙砖地图
-
+        private int[,] test;
         public MapModel(int Maptyep)
         {
            switch(Maptyep)
