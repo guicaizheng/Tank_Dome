@@ -9,11 +9,11 @@ namespace Tank_Dome.Model
 {
     class Wall
     {
-        int Walltepy;
-        Image img;
+        int walltepy = 0;
+        Image img = Image.FromFile("image\\wall.png");
         public Image CreateWall(int walltepy)
         {
-             switch (Walltepy)
+             switch (walltepy)
              {
                     case 1:
                         img = Image.FromFile("image\\wall.png");
