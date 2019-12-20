@@ -61,8 +61,8 @@ namespace Tank_Dome
         {
             Random r = new Random();
             this.direct = r.Next(0, 4); //0-3
-            this.width = 32;
-            this.height = 32;
+            this.width = 60;
+            this.height = 60;
             this.left = r.Next(0, 10);  //0-9
             this.top = r.Next(0, 10);   //0-9
             this.type = tank_type;
@@ -79,10 +79,10 @@ namespace Tank_Dome
 
         public void Draw(Graphics g, int type)
         {
-            Image tank = Image.FromFile(@"F:\College_Data\.Net\Tank_Dome\Tank_Dome\Tank_Dome\source\0.jpg");
+            Image tank = Image.FromFile(@"F:\College_Data\.Net\Tank_Dome\Tank_Dome\Tank_Dome\source\mytank1.png");
 
             Rectangle destRect = new Rectangle(this.left * width, this.top * height, width, height);
-            Rectangle srcRect = new Rectangle(direct * width, 0, width, height);
+            Rectangle srcRect = new Rectangle(0, 0, width, height);
             g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
         }
 
@@ -94,7 +94,6 @@ namespace Tank_Dome
             g.DrawImage(tank, destRect, srcRect, GraphicsUnit.Pixel);
 
             //PlaySound.Play("Sound/Explode.wav");
-
         }
 
         public void fire()
@@ -109,21 +108,21 @@ namespace Tank_Dome
 
         public void MoveBullet(ref int[,] Map)
         {
-            for (int i = bList.Count - 1; 1 >= 0; i--)//遍历子弹序列
-                                                      //for(int i= 0; i<bList.ComCount;i++ )
+            for (int i = bList.Count - 1; i >= 0; i--)//遍历子弹序列
+            //for(int i= 0; i<bList.ComCount;i++ )
             {
                 bullet t = ((bullet)bList[i]);
                 //移动以前
                 if (t.Left < 0 || t.Left > 9 || t.Top < 0 || t.Top > 9)
                 //超出边界
                 {
-                    bList.RemoveAt(i); continue;
+                    bList.RemoveAt(i); continue;        //删除此颗子弹
                 }
                 if (Map[t.Left, t.Top] != 0 && Map[t.Left, t.Top] != this.type)
                 {
-                    bList.RemoveAt(1);
-                    if (t.hitE(Map[t.Left, t.Top]))
-                        Map[t.Left, t.Top] = -1;
+                    bList.RemoveAt(1);                  //删除此颗子弹
+                    if (t.hitE(Map[t.Left, t.Top]))     //击中敌方坦克
+                        Map[t.Left, t.Top] = -1;        //坦克被击中用-1表示
                     continue;
                 }
                 t.move();

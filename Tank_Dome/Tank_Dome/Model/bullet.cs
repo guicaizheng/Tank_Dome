@@ -12,8 +12,8 @@ namespace Tank_Dome.Model
         private int top;            //子弹坐标(Left,Top)
         private int left;
         private int direct;         //子弹的行进方向
-        private int width = 32;
-        private int height = 32;
+        private int width = 60;
+        private int height = 60;
         private bool type;          //已方子弹为true,敌方子弹为false
 
         public bullet(int type)     //子弹类构造函数
