@@ -126,7 +126,7 @@ namespace Tank_Dome
 
         private bool Meet_Tank(int left, int top)               //判断某坐标处是否有坦克
         {
-            foreach(Tank t in eTanks)                           //遍历地方
+            foreach(Tank t in eTanks)                           //遍历敌方
             {
                 if (left == t.Left && top == t.Top)             //遇到坦克
                     return true;
