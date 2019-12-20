@@ -32,9 +32,9 @@ namespace Tank_Dome.Model
         {
             Image bulletImage;
             if (type == true)
-                bulletImage = Image.FromFile(@"F:\College_Data\.Net\Tank_Dome\Tank_Dome\Tank_Dome\source\0.jpg");  //己方子弹
+                bulletImage = Image.FromFile(@"source\\tankbuttle.png");  //己方子弹
             else
-                bulletImage = Image.FromFile(@"F:\College_Data\.Net\Tank_Dome\Tank_Dome\Tank_Dome\source\0.jpg"); //敌方子弹
+                bulletImage = Image.FromFile(@"source\\enemybuttle.png"); //敌方子弹
 
             //得到绘制这个子弹图形的矩形区城
             Rectangle destRect = new Rectangle(left * width, top * height, width, height);
