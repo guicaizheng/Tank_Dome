@@ -27,7 +27,7 @@ namespace Tank_Dome
             }
             set
             {
-                if (left >= 0 && left <= 9)
+                if (left >= 0 && left <= 12)
                     left = value;
             }
         }
@@ -39,7 +39,7 @@ namespace Tank_Dome
             }
             set
             {
-                if (top >= 0 && top <= 9)
+                if (top >= 0 && top <= 12)
                     top = value;
             }
         }
@@ -60,7 +60,6 @@ namespace Tank_Dome
         public Tank(int tank_type,int left,int top)//产生随机方向
         {
             Random r = new Random();
-
             this.direct = r.Next(0, 4); //0-3
             this.width = 30;
             this.height = 30;
@@ -133,7 +132,6 @@ namespace Tank_Dome
         public void MoveBullet(ref int[,] Map)
         {
             for (int i = bList.Count - 1; i>= 0; i--)//遍历子弹序列
-                                                      //for(int i= 0; i<bList.ComCount;i++ )
             {
                 bullet t = ((bullet)bList[i]);
                 //移动以前
@@ -142,11 +140,12 @@ namespace Tank_Dome
                 {
                     bList.RemoveAt(i); continue;
                 }
-                if (Map[t.Left, t.Top] != 0 && Map[t.Left, t.Top] != this.type)
+                if (Map[t.Top, t.Left] != 0 && Map[t.Top, t.Left] != this.type)
                 {
                     bList.RemoveAt(i);
-                    if (t.hitE(Map[t.Left, t.Top]))
-                        Map[t.Left, t.Top] = -1;
+                    if (t.hitE(Map[t.Top, t.Left]))
+
+                        Map[t.Top, t.Left] = -1;
                     continue;
                 }
                 t.move();
@@ -155,12 +154,12 @@ namespace Tank_Dome
                 {
                     bList.RemoveAt(i); continue;
                 }
-                if (Map[t.Left, t.Top] != 0)
+                if (Map[t.Top, t.Left] != 0)
                 //遇到物体
                 {
                     bList.RemoveAt(i);
-                    if (t.hitE(Map[t.Left, t.Top]))
-                        Map[t.Left, t.Top] = -1;
+                    if (t.hitE(Map[t.Top, t.Left]))
+                        Map[t.Top, t.Left] = -1;
                     continue;
                 }
             }
