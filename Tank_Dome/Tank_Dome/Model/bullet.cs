@@ -73,5 +73,15 @@ namespace Tank_Dome.Model
 
             return false;
         }
+
+        public bool hitWall(int map)
+        {
+            bool hitflag=false;
+            if(map == 1)
+            {
+                hitflag = true;
+            }
+            return hitflag;
+        }
     }
 }

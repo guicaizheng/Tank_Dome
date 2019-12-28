@@ -67,7 +67,7 @@ namespace Tank_Dome
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    if (MyTank.Top == 0 || Map.Map1[MyTank.Top - 1,MyTank.Left] >= 1
+                    if (MyTank.Top == 0 || Isgo(MyTank.Top - 1,MyTank.Left) == 0
                     || Meet_Tank(MyTank.Left, MyTank.Top - 1))
                     {  //遇到墙砖或坦克
                        
@@ -80,7 +80,7 @@ namespace Tank_Dome
                     break;
 
                 case Keys.S:                                 //下
-                    if (MyTank.Top == 12 || Map.Map1[MyTank.Top + 1,MyTank.Left] >= 1
+                    if (MyTank.Top == 12 || Isgo(MyTank.Top + 1, MyTank.Left) == 0
                     || Meet_Tank(MyTank.Left, MyTank.Top + 1))  //遇到墙砖或坦克
                         ;                                       //不动
                     else
@@ -90,7 +90,7 @@ namespace Tank_Dome
                     }
                     break;
                 case Keys.A:                                 //左
-                    if(MyTank.Left == 0 || Map.Map1[MyTank.Top, MyTank.Left - 1] >= 1
+                    if(MyTank.Left == 0 || Isgo(MyTank.Top , MyTank.Left - 1) == 0
                     || Meet_Tank(MyTank.Left - 1, MyTank.Top))	//遇到墙砖或坦克
 				        ;										//不动
 			        else
@@ -100,7 +100,7 @@ namespace Tank_Dome
                     } 
                     break;
                 case Keys.D:                                //右
-                    if (MyTank.Left == 12 || Map.Map1[MyTank.Top,MyTank.Left + 1] >= 1
+                    if (MyTank.Left == 12 || Isgo(MyTank.Top, MyTank.Left + 1) == 0
                     || Meet_Tank(MyTank.Left + 1, MyTank.Top))  //遇到墙砖或坦克
                         ;                                       //不动
                     else
@@ -131,7 +131,23 @@ namespace Tank_Dome
             //    return true;
             return false;
         }
-
+        private int Isgo(int top,int left)
+        {
+            int ISgo=1;
+            switch (Map.Map1[top,left])
+            {
+                case 1:
+                    ISgo = 0;
+                    break;
+                case 2:
+                    ISgo = 0;
+                    break;
+                case 3:
+                    ISgo = 0;
+                    break;
+            }
+            return ISgo;
+        }
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             //修改含坦克信息的地图
