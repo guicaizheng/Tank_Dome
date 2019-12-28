@@ -11,6 +11,7 @@ namespace Tank_Dome.Model
     {
         private int top;            //子弹坐标(Left,Top)
         private int left;
+
         private int direct;         //子弹的行进方向
         private int width = 30;
         private int height = 30;

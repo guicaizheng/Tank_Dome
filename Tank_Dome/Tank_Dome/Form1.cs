@@ -71,7 +71,13 @@ namespace Tank_Dome
                     if (MyTank.Top == 0 || Map.Map1[MyTank.Left, MyTank.Top - 1] >= 1
                     || Meet_Tank(MyTank.Left, MyTank.Top - 1))
                     {  //遇到墙砖或坦克
-                        Console.Write(Map.Map1);
+                        for(int i = 0; i < 13; i++)
+                        {
+                            for (int j = 0; j < 13; j++)
+                                Console.WriteLine(Map.Map1[i, j]);
+                            Console.WriteLine("BBBBBBBBBBBBBBBBBBBB");
+                        }
+                        Console.WriteLine(Map.Map1[MyTank.Left, MyTank.Top - 1]);
                         MessageBox.Show(MyTank.Top.ToString());
                         MessageBox.Show(MyTank.Left.ToString(), (MyTank.Top - 1).ToString());
                         MessageBox.Show(Map.Map1[MyTank.Left, MyTank.Top - 1].ToString());
