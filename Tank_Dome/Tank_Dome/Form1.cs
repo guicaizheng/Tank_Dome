@@ -70,7 +70,7 @@ namespace Tank_Dome
                     if (MyTank.Top == 0 || Map.Map1[MyTank.Top - 1,MyTank.Left] >= 1
                     || Meet_Tank(MyTank.Left, MyTank.Top - 1))
                     {  //遇到墙砖或坦克
-                       
+                        MyTank.Direct = 0;
                     }//不动
                     else
                     {
@@ -82,7 +82,7 @@ namespace Tank_Dome
                 case Keys.S:                                 //下
                     if (MyTank.Top == 12 || Map.Map1[MyTank.Top + 1,MyTank.Left] >= 1
                     || Meet_Tank(MyTank.Left, MyTank.Top + 1))  //遇到墙砖或坦克
-                        ;                                       //不动
+                        MyTank.Direct = 1;                                       //不动
                     else
                     {
                         MyTank.Top++;
@@ -91,8 +91,8 @@ namespace Tank_Dome
                     break;
                 case Keys.A:                                 //左
                     if(MyTank.Left == 0 || Map.Map1[MyTank.Top, MyTank.Left - 1] >= 1
-                    || Meet_Tank(MyTank.Left - 1, MyTank.Top))	//遇到墙砖或坦克
-				        ;										//不动
+                    || Meet_Tank(MyTank.Left - 1, MyTank.Top))  //遇到墙砖或坦克
+                        MyTank.Direct = 2;					    //不动
 			        else
                     {
                         MyTank.Left--;
@@ -102,7 +102,7 @@ namespace Tank_Dome
                 case Keys.D:                                //右
                     if (MyTank.Left == 12 || Map.Map1[MyTank.Top,MyTank.Left + 1] >= 1
                     || Meet_Tank(MyTank.Left + 1, MyTank.Top))  //遇到墙砖或坦克
-                        ;                                       //不动
+                        MyTank.Direct = 3;                                       //不动
                     else
                     {
                         MyTank.Left++;

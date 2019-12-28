@@ -144,7 +144,6 @@ namespace Tank_Dome
                 {
                     bList.RemoveAt(i);
                     if (t.hitE(Map[t.Top, t.Left]))
-
                         Map[t.Top, t.Left] = -1;
                     continue;
                 }
