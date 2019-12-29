@@ -140,6 +140,7 @@ namespace Tank_Dome
                 {
                     bList.RemoveAt(i); continue;
                 }
+       
                 if (Map[t.Top, t.Left] != 0 && Map[t.Top, t.Left] != this.type)
                 {
                     bList.RemoveAt(i);

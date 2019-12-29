@@ -28,7 +28,7 @@ namespace Tank_Dome
         private Wall wall=new Wall();
         private Tank MyTank = new Tank(6,4,12);      //己方坦克为6
         private int width = 30;
-        MapModel Map = new MapModel(3);
+        MapModel Map = new MapModel(2);
         //private int[,] Map = new int[13, 13];   //墙砖地图
         private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
         private int Score = 0;
@@ -67,10 +67,10 @@ namespace Tank_Dome
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    if (MyTank.Top == 0 || Map.Map1[MyTank.Top - 1,MyTank.Left] >= 1
+                    if (MyTank.Top == 0 || Isgo(MyTank.Top - 1,MyTank.Left) == 0
                     || Meet_Tank(MyTank.Left, MyTank.Top - 1))
                     {  //遇到墙砖或坦克
-                        MyTank.Direct = 0;
+                       
                     }//不动
                     else
                     {
@@ -80,9 +80,9 @@ namespace Tank_Dome
                     break;
 
                 case Keys.S:                                 //下
-                    if (MyTank.Top == 12 || Map.Map1[MyTank.Top + 1,MyTank.Left] >= 1
+                    if (MyTank.Top == 12 || Isgo(MyTank.Top + 1, MyTank.Left) == 0
                     || Meet_Tank(MyTank.Left, MyTank.Top + 1))  //遇到墙砖或坦克
-                        MyTank.Direct = 1;                                       //不动
+                        ;                                       //不动
                     else
                     {
                         MyTank.Top++;
@@ -90,9 +90,9 @@ namespace Tank_Dome
                     }
                     break;
                 case Keys.A:                                 //左
-                    if(MyTank.Left == 0 || Map.Map1[MyTank.Top, MyTank.Left - 1] >= 1
-                    || Meet_Tank(MyTank.Left - 1, MyTank.Top))  //遇到墙砖或坦克
-                        MyTank.Direct = 2;					    //不动
+                    if(MyTank.Left == 0 || Isgo(MyTank.Top , MyTank.Left - 1) == 0
+                    || Meet_Tank(MyTank.Left - 1, MyTank.Top))	//遇到墙砖或坦克
+				        ;										//不动
 			        else
                     {
                         MyTank.Left--;
@@ -100,9 +100,9 @@ namespace Tank_Dome
                     } 
                     break;
                 case Keys.D:                                //右
-                    if (MyTank.Left == 12 || Map.Map1[MyTank.Top,MyTank.Left + 1] >= 1
+                    if (MyTank.Left == 12 || Isgo(MyTank.Top, MyTank.Left + 1) == 0
                     || Meet_Tank(MyTank.Left + 1, MyTank.Top))  //遇到墙砖或坦克
-                        MyTank.Direct = 3;                                       //不动
+                        ;                                       //不动
                     else
                     {
                         MyTank.Left++;
@@ -131,7 +131,23 @@ namespace Tank_Dome
             //    return true;
             return false;
         }
-
+        private int Isgo(int top,int left)
+        {
+            int ISgo=1;
+            switch (Map.Map1[top,left])
+            {
+                case 1:
+                    ISgo = 0;
+                    break;
+                case 2:
+                    ISgo = 0;
+                    break;
+                case 3:
+                    ISgo = 0;
+                    break;
+            }
+            return ISgo;
+        }
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             //修改含坦克信息的地图
