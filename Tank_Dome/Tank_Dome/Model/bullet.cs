@@ -11,7 +11,6 @@ namespace Tank_Dome.Model
     {
         private int top;            //子弹坐标(Left,Top)
         private int left;
-
         private int direct;         //子弹的行进方向
         private int width = 30;
         private int height = 30;
@@ -19,11 +18,10 @@ namespace Tank_Dome.Model
 
         public bullet(int type)     //子弹类构造函数
         {
+            
             if (type == 6)          //己方
             {
                 this.type = true;
-                Playsound.Play("Sound/attack.wav");
-                //Playsound.Stop();
             }
             else
                 this.type = false;  //敌方

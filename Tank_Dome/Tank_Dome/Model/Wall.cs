@@ -29,6 +29,9 @@ namespace Tank_Dome.Model
                     case 9:
                         img = Image.FromFile("image\\base1.png");
                         break;
+                    case 10:
+                        img = Image.FromFile("image\\base2.png");
+                    break;
             }
             return img;
         }

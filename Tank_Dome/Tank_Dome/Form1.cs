@@ -28,7 +28,7 @@ namespace Tank_Dome
         private Wall wall=new Wall();
         private Tank MyTank = new Tank(6,4,12);  //己方坦克为6
         private int width = 30;
-        private MapModel Map = new MapModel(2);         //墙砖地图
+        private MapModel Map = new MapModel(3);         //墙砖地图
         private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
         private int Score = 0;                  //分数
 
@@ -115,8 +115,13 @@ namespace Tank_Dome
                     }
                     break;
                 case Keys.Space:                                //按空格键发射子弹
-                    //Playsound.Play("Sound/attack.wav");
-                    MyTank.fire();
+                    if (MyTank.Buttle_num == 0)
+                    {
+                        MyTank.Buttle_num++;
+                        Playsound.Play("Sound/attack.wav");
+                        MyTank.fire();
+                    }
+                    
                     break;
                 case Keys.P:
                     label1.Text=eTanks.Count.ToString();
@@ -198,9 +203,13 @@ namespace Tank_Dome
             {
                 for(int j = 0; j < 13; j++)
                 {
-                    if(TMap[i,j] <= 4 && TMap[i, j] >= 0 && TMap[i, j] != Map.Map1[i, j])
+                    if(Map.Map1[i,j] == 1 && TMap[i, j] == 0)
                     {
-                        Map.Map1[i, j] = TMap[i, j];
+                        Map.Map1[i, j] = 0;
+                    }
+                    else if (Map.Map1[i, j] == 9 && TMap[i, j] == 10)
+                    {
+                        Map.Map1[i, j] = 10;
                     }
                 }
             }
@@ -219,7 +228,7 @@ namespace Tank_Dome
                         i--;
                         TMap[t.Top,t.Left] = 0;
                         Score += 100;
-                        Playsound.Play("Sound/tankCrack.wav");
+                        
                         CheckWin();
                     }
                     
@@ -231,13 +240,15 @@ namespace Tank_Dome
                 MyTank.Explore(e.Graphics);
                 TMap[MyTank.Top, MyTank.Left] = 0;
                 Playsound.Play("Sound/playerCrack.wav");
+                pictureBox1.Invalidate();
                 timer1.Enabled = false;
                 timer3.Enabled = false;
                 MessageBox.Show("游戏结束!");
             }
-            if (TMap[MyTank.Top, MyTank.Left] == 0)         //基地爆炸
+            if (TMap[MyTank.Top, MyTank.Left] == 10)         //基地爆炸
             {
                 Playsound.Play("Sound/playerCrack.wav");
+                pictureBox1.Invalidate();
                 timer1.Enabled = false;
                 timer3.Enabled = false;
                 MessageBox.Show("游戏结束!");
@@ -249,6 +260,7 @@ namespace Tank_Dome
         {
             if(eTanks.Count == 0 && eCount == eMaxCount)     //胜利
             {
+                pictureBox1.Invalidate();
                 Playsound.Play("Sound/prop.wav");          //过关后播放音乐
                 MessageBox.Show("过关!");
                 timer1.Enabled = false;
@@ -256,7 +268,7 @@ namespace Tank_Dome
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)       //敌方坦克的行动
         {
             foreach (Tank t in eTanks)
             {
