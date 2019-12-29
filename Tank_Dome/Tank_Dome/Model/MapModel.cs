@@ -8,9 +8,7 @@ namespace Tank_Dome.Model
 {
     class MapModel
     {
-        //int Maptyep = 0;
         private int[,] Map = new int[13, 13];   //墙砖地图
-        //private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
 
         public MapModel(int Maptyep)
         {
@@ -74,6 +72,5 @@ namespace Tank_Dome.Model
         }
 
         public int[,] Map1 { get => Map; set => Map = value; }
-        //public int[,] TMap1 { get => TMap; set => TMap = value; }
     }
 }

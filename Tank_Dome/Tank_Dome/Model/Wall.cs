@@ -9,7 +9,6 @@ namespace Tank_Dome.Model
 {
     class Wall
     {
-        int walltepy = 0;
         Image img = Image.FromFile("image\\wall.png");
         public Image CreateWall(int walltepy)
         {
