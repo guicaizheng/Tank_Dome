@@ -20,7 +20,11 @@ namespace Tank_Dome.Model
         public bullet(int type)     //子弹类构造函数
         {
             if (type == 6)          //己方
+            {
                 this.type = true;
+                Playsound.Play("Sound/attack.wav");
+                //Playsound.Stop();
+            }
             else
                 this.type = false;  //敌方
         }
@@ -78,7 +82,7 @@ namespace Tank_Dome.Model
         public bool hitWall(int map)
         {
             bool hitflag=false;
-            if(map == 1)
+            if(map == 1 || map == 9)
             {
                 hitflag = true;
             }

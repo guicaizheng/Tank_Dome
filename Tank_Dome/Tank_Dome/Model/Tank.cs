@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Tank_Dome.Model;
 
 namespace Tank_Dome
@@ -126,7 +127,8 @@ namespace Tank_Dome
             b.Top = this.Top;
             b.Left = this.Left;
             bList.Add(b);
-            //if (this.type == 6) PlaySound.Play("Sound/Shoot.wav");
+            //if (this.type == 6)
+            //    Playsound.Play("Sound/attack.wav");
         }
 
         public void MoveBullet(ref int[,] Map)
@@ -135,33 +137,52 @@ namespace Tank_Dome
             {
                 bullet t = ((bullet)bList[i]);
                 //移动以前
-                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)
-                //超出边界
+                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)//超出边界
                 {
-                    bList.RemoveAt(i); continue;
+                    bList.RemoveAt(i);
+                    Playsound.Play("Sound/buttleCrack.wav");
+                    continue;
                 }
-       
+                if (t.hitWall(Map[t.Top, t.Left]))
+                {
+                    bList.RemoveAt(i);
+                    Playsound.Play("Sound/buttleCrack.wav");
+                    Map[t.Top, t.Left] = 0;
+                    continue;
+                }
                 if (Map[t.Top, t.Left] != 0 && Map[t.Top, t.Left] != this.type)
                 {
                     bList.RemoveAt(i);
+                    Playsound.Play("Sound/buttleCrack.wav");
                     if (t.hitE(Map[t.Top, t.Left]))
                         Map[t.Top, t.Left] = -1;
                     continue;
                 }
+                
                 t.move();
-                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)
-                //超出边界
-                {
-                    bList.RemoveAt(i); continue;
-                }
-                if (Map[t.Top, t.Left] != 0)
-                //遇到物体
+
+                //移动以后
+                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)//超出边界
                 {
                     bList.RemoveAt(i);
-                    if (t.hitE(Map[t.Top, t.Left]))
-                        Map[t.Top, t.Left] = -1;
+                    Playsound.Play("Sound/buttleCrack.wav");
                     continue;
                 }
+                if (Map[t.Top, t.Left] != 0)//遇到物体
+                {
+                    bList.RemoveAt(i);
+                    if (t.hitWall(Map[t.Top, t.Left]))
+                    {
+                        Playsound.Play("Sound/buttleCrack.wav");
+                        Map[t.Top, t.Left] = 0;
+                    }
+                    else if (t.hitE(Map[t.Top, t.Left]))
+                    {
+                        Map[t.Top, t.Left] = -1;
+                    }
+                    continue;
+                }
+                
             }
         }
 

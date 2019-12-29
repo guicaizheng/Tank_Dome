@@ -54,7 +54,7 @@
     </Compile>
     <Compile Include="Model\bullet.cs" />
     <Compile Include="Model\MapModel.cs" />
-    <Compile Include="Model\PlaySound.cs" />
+    <Compile Include="Model\Playsound.cs" />
     <Compile Include="Model\Wall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
