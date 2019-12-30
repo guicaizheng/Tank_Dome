@@ -12,7 +12,7 @@ namespace Tank_Dome.Model
 
         public MapModel(int Maptyep)
         {
-           switch(Maptyep)
+           switch(Maptyep)//地图选择
            {
                 case 1:
                     Map = new int[13, 13]
