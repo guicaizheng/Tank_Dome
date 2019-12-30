@@ -28,7 +28,7 @@ namespace Tank_Dome
         private Wall wall=new Wall();
         private Tank MyTank = new Tank(6,4,12);  //己方坦克为6
         private int width = 30;
-        private MapModel Map = new MapModel(3);         //墙砖地图
+        private MapModel Map = new MapModel(3); //墙砖地图
         private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
         private int Score = 0;                  //分数
 
@@ -142,6 +142,7 @@ namespace Tank_Dome
             //    return true;
             return false;
         }
+
         private int Isgo(int top,int left)
         {
             int ISgo=1;
@@ -228,30 +229,27 @@ namespace Tank_Dome
                         i--;
                         TMap[t.Top,t.Left] = 0;
                         Score += 100;
-                        
                         CheckWin();
                     }
-                    
                 }
-                
             }
             if(TMap[MyTank.Top,MyTank.Left] == -1)          //画己方坦克爆炸
             {
                 MyTank.Explore(e.Graphics);
                 TMap[MyTank.Top, MyTank.Left] = 0;
                 Playsound.Play("Sound/playerCrack.wav");
-                pictureBox1.Invalidate();
+                //pictureBox1.Invalidate();
                 timer1.Enabled = false;
                 timer3.Enabled = false;
                 MessageBox.Show("游戏结束!");
             }
-            if (TMap[MyTank.Top, MyTank.Left] == 10)         //基地爆炸
+            if (TMap[12, 6] == 10)         //基地爆炸
             {
                 Playsound.Play("Sound/playerCrack.wav");
                 pictureBox1.Invalidate();
                 timer1.Enabled = false;
                 timer3.Enabled = false;
-                MessageBox.Show("游戏结束!");
+                MessageBox.Show("基地爆炸!");
             }
         }
 
@@ -317,8 +315,8 @@ namespace Tank_Dome
             Random r = new Random();
             if (eCount < eMaxCount)                             //敌方坦克最大值
             {
-                left = r.Next(0, 12);  //0-9
-                top = r.Next(0,12);   //0-9
+                left = r.Next(0, 12);  //0-12
+                top = r.Next(0,12);   //0-12
                 if (Map.Map1[top,left] == 0)
                 {
                     eTank = new Tank(5, left, top);

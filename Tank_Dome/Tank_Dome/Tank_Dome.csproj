@@ -84,12 +84,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="source\picTank\" />
-    <Folder Include="source\Sound\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="source\0.jpg" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

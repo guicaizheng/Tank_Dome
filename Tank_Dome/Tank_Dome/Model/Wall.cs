@@ -30,9 +30,9 @@ namespace Tank_Dome.Model
                         img = Image.FromFile("image\\base1.png");
                         break;
                     case 10:
-                        img = Image.FromFile("image\\base2.png");
+                        img = Image.FromFile("image\\explore.png");
                     break;
-            }
+             }
             return img;
         }
     }

@@ -39,7 +39,7 @@ namespace Tank_Dome.Model
             else
                 bulletImage = Image.FromFile(@"image\\enemybuttle.png"); //敌方子弹
 
-            //得到绘制这个子弹图形的矩形区城
+            //绘制这个子弹图形的矩形区城
             Rectangle destRect = new Rectangle(left * width, top * height, width, height);
             Rectangle srcRect = new Rectangle(0, 0, width, height);
             g.DrawImage(bulletImage, destRect, srcRect, GraphicsUnit.Pixel);
