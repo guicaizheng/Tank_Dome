@@ -11,7 +11,6 @@ namespace Tank_Dome.Model
     {
         private int top;            //子弹坐标(Left,Top)
         private int left;
-
         private int direct;         //子弹的行进方向
         private int width = 30;
         private int height = 30;
@@ -47,7 +46,7 @@ namespace Tank_Dome.Model
             g.DrawImage(bulletImage, destRect, srcRect, GraphicsUnit.Pixel);
         }
 
-        public void move()
+        public void move()//子弹的移动
         {
             switch (Direct)
             {
@@ -79,7 +78,7 @@ namespace Tank_Dome.Model
             return false;
         }
 
-        public bool hitWall(int map)
+        public bool hitWall(int map)//是否打中砖块
         {
             bool hitflag=false;
             if(map == 1 || map == 9)

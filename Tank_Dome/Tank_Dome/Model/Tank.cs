@@ -20,7 +20,7 @@ namespace Tank_Dome
         private int direct=0;     //方向：0:上  1:下  2:左  3:右
         public ArrayList bList = new ArrayList();   //子弹序列
 
-        public int Left
+        public int Left//左
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Tank_Dome
                     left = value;
             }
         }
-        public int Top
+        public int Top//上
         {
             get
             {
@@ -82,10 +82,24 @@ namespace Tank_Dome
         {
             Image tank = Image.FromFile("image\\mytank0.png");
          
-            if (type == 2) tank = Image.FromFile(@"image\\tank0.png");
-            if (type == 3) tank = Image.FromFile(@"image\\tank0.png");
-            if (type == 4) tank = Image.FromFile(@"image\\tank0.png");
-            if (type == 5) tank = Image.FromFile(@"image\\tank0.png");
+            if (type == 5)
+            {
+                switch (direct)
+                {
+                    case 0:
+                        tank = Image.FromFile("image\\tank0.png");
+                        break;
+                    case 1:
+                        tank = Image.FromFile("image\\tank1.png");
+                        break;
+                    case 2:
+                        tank = Image.FromFile("image\\tank2.png");
+                        break;
+                    case 3:
+                        tank = Image.FromFile("image\\tank3.png");
+                        break;
+                }
+            }
             if (type == 6)
             {
                 switch (direct)

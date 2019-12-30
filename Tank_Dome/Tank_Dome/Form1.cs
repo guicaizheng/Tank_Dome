@@ -28,7 +28,7 @@ namespace Tank_Dome
         private Wall wall=new Wall();
         private Tank MyTank = new Tank(6,4,12);  //己方坦克为6
         private int width = 30;
-        private MapModel Map = new MapModel(2);         //墙砖地图
+        private MapModel Map = new MapModel(3);         //墙砖地图
         private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
         private int Score = 0;                  //分数
 
