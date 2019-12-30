@@ -60,7 +60,7 @@ namespace Tank_Dome.Model
             }
         }
 
-        public bool hitE(int tanktype)  //是否击中敌方坦克
+        public bool hitE(int tanktype)  //是否击中坦克
         {
             if (type == false)          //敌方子弹
                 if (tanktype >= 2 && tanktype <= 5)     //坦克类型(2-5为敌方,6为己方)

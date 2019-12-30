@@ -17,6 +17,7 @@ namespace Tank_Dome
         private int left;           //坦克位置的横坐标
         private int top;            //坦克位置的纵坐标
         private int type;           //坦克的类型
+        private int life=2;         //坦克的生命
         private int buttle_num = 0; //子弹的数量
         private int direct=0;       //方向：0:上  1:下  2:左  3:右
         public ArrayList bList = new ArrayList();   //子弹序列
@@ -59,8 +60,9 @@ namespace Tank_Dome
         }
         public int Direct { get => direct; set => direct = value; }//坦克方向
         public int Buttle_num { get => buttle_num; set => buttle_num = value; }
+        public int Life { get => life; set => life = value; }
 
-        public Tank(int tank_type,int left,int top)//产生随机方向
+        public Tank(int tank_type, int left, int top)//产生随机方向
         {
             Random r = new Random();
             this.direct = r.Next(0, 4); //0-3

@@ -10,9 +10,9 @@ namespace Tank_Dome.Model
     {
         private int[,] Map = new int[13, 13];   //墙砖地图
 
-        public MapModel(int Maptyep)
+        public MapModel(int Maptype)
         {
-           switch(Maptyep)//地图选择
+           switch(Maptype)//地图选择
            {
                 case 1:
                     Map = new int[13, 13]
