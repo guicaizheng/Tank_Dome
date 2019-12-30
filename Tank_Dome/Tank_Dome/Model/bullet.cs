@@ -18,11 +18,10 @@ namespace Tank_Dome.Model
 
         public bullet(int type)     //子弹类构造函数
         {
+            
             if (type == 6)          //己方
             {
                 this.type = true;
-                Playsound.Play("Sound/attack.wav");
-                //Playsound.Stop();
             }
             else
                 this.type = false;  //敌方
