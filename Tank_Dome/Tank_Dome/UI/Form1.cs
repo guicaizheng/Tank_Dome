@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using Tank_Dome.Model;
 
 namespace Tank_Dome
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, Key
     {
+
         private int level = 0;
         private MapModel Map;
         public Form1(int maptype)
@@ -23,7 +18,6 @@ namespace Tank_Dome
             level = maptype;
             Map = new MapModel(level); //墙砖地图
         }
-
         
         private int eCount = 0;                 //敌方坦克数量
         private int eMaxCount = 5;              //敌方坦克的最大数量
@@ -36,7 +30,8 @@ namespace Tank_Dome
         
         private int[,] TMap = new int[13, 13];  //坦克，墙砖地图
         private int Score = 0;                  //分数
-        
+        private DateTime dt1;
+        private DateTime dt2;
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
@@ -48,6 +43,7 @@ namespace Tank_Dome
             MyTank.Left = 4;
             MyTank.Direct = 0;
             label1.Text = "X:" + MyTank.Left + "Y:" + MyTank.Top;
+            dt1 = System.DateTime.Now;
             Playsound.Play("Sound/start.wav");
         }
 
@@ -66,29 +62,28 @@ namespace Tank_Dome
                     }
                 }
         }
-
         
-        private void Form1_KeyDown(object sender, KeyEventArgs e)   //方向键盘控制
+    public void Form1_KeyDown(object sender, KeyEventArgs e)   //方向键盘控制
+    {
+        switch (e.KeyCode)
         {
-            switch (e.KeyCode)
-            {
-                case Keys.W:
-                    if (MyTank.Top == 0 || Isgo(MyTank.Top - 1,MyTank.Left) == 0
-                    || Meet_Tank(MyTank.Left, MyTank.Top - 1))  //遇到墙砖或坦克
-                    {  
-                        MyTank.Direct = 0;                      //不动
-                    }
-                    else
-                    {
-                        MyTank.Top--;
-                        MyTank.Direct = 0;
-                    }  
-                    break;
-                case Keys.S:                                    //下
+            case Keys.W:
+                if (MyTank.Top == 0 || Isgo(MyTank.Top - 1,MyTank.Left) == 0
+                || Meet_Tank(MyTank.Left, MyTank.Top - 1))  //遇到墙砖或坦克
+                {  
+                    MyTank.Direct = 0;                      //不动,但是转向
+                }
+                else
+                {
+                    MyTank.Top--;
+                    MyTank.Direct = 0;
+                }  
+                break;
+            case Keys.S:                                    //下
                     if (MyTank.Top == 12 || Isgo(MyTank.Top + 1, MyTank.Left) == 0
                     || Meet_Tank(MyTank.Left, MyTank.Top + 1))  //遇到墙砖或坦克
                     {
-                        MyTank.Direct = 1;                      //不动
+                        MyTank.Direct = 1;                      //不动,但是转向
                     }
                     else
                     {
@@ -100,7 +95,7 @@ namespace Tank_Dome
                     if(MyTank.Left == 0 || Isgo(MyTank.Top , MyTank.Left - 1) == 0
                     || Meet_Tank(MyTank.Left - 1, MyTank.Top))  //遇到墙砖或坦克
                     {
-                        MyTank.Direct = 2;                      //不动
+                        MyTank.Direct = 2;                      //不动,但是转向
                     }
                     else
                     {
@@ -112,7 +107,7 @@ namespace Tank_Dome
                     if (MyTank.Left == 12 || Isgo(MyTank.Top, MyTank.Left + 1) == 0
                     || Meet_Tank(MyTank.Left + 1, MyTank.Top))  //遇到墙砖或坦克
                     {
-                        MyTank.Direct = 3;                      //不动
+                        MyTank.Direct = 3;                      //不动,但是转向
                     }
                     else
                     {
@@ -121,22 +116,18 @@ namespace Tank_Dome
                     }
                     break;
                 case Keys.Space:                                //按空格键发射子弹
-                    if (MyTank.Buttle_num == 0)
+                    if (MyTank.Buttle_num == 0)                 //自己的子弹在场上只能同时存在一颗
                     {
                         MyTank.Buttle_num++;
                         Playsound.Play("Sound/attack.wav");
                         MyTank.fire();
                     }
-                    
                     break;
                 case Keys.P:
                     label1.Text=eTanks.Count.ToString();
                     break;
             }
             pictureBox1.Invalidate();                            //重画游戏面板区域
-            label3.Text = "关卡:" + level;
-            label1.Text = "X坐标:" + MyTank.Left + " Y坐标:" + MyTank.Top;
-            label2.Text = "生命值:" + MyTank.Life;
         }
 
         private bool Meet_Tank(int left, int top)               //判断某坐标处是否有坦克
@@ -170,8 +161,13 @@ namespace Tank_Dome
         }
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            label3.Text = "关卡:" + level;
+            label4.Text = "敌方坦克数量:" + eTanks.Count;
+            label1.Text = "X坐标:" + MyTank.Left + " Y坐标:" + MyTank.Top;
+            label2.Text = "生命值:" + MyTank.Life;
+
             //修改含坦克信息的地图
-            for(int x = 0; x < 13; x++)
+            for (int x = 0; x < 13; x++)
                 for(int y = 0; y < 13; y++)
                 {
                     if (Map.Map1[x, y] == 1)
@@ -241,6 +237,7 @@ namespace Tank_Dome
                     }
                 }
             }
+
             if(TMap[MyTank.Top,MyTank.Left] == -1)          //画己方坦克爆炸
             {
                 if (MyTank.Life > 0)
@@ -249,26 +246,34 @@ namespace Tank_Dome
                 }
                 if (MyTank.Life == 0)
                 {
+
                     pictureBox1.Invalidate();
                     MyTank.Explore(e.Graphics);
                     TMap[MyTank.Top, MyTank.Left] = 0;
                     Playsound.Play("Sound/playerCrack.wav");
-                    timer1.Enabled = false;
-                    timer3.Enabled = false;
+                    //timer1.Enabled = false;
+                    //timer3.Enabled = false;
                     System.Threading.Thread.Sleep(1000);
                     MessageBox.Show("游戏结束!");
+
+                    this.Hide();
+                    begin f = new begin();
+                    f.ShowDialog();
+                    this.Close();
                 }
             }
             if (TMap[12, 6] == 10)         //基地爆炸
             {
+
                 Playsound.Play("Sound/playerCrack.wav");
                 pictureBox1.Invalidate();
-                timer1.Enabled = false;
-                timer3.Enabled = false;
-                MessageBox.Show("基地爆炸!");
+                MessageBox.Show("基地爆炸");
+                this.Hide();
+                begin b = new begin();
+                b.ShowDialog(this);
+                this.Close();
             }
         }
-
 
         private void CheckWin()
         {
@@ -276,17 +281,27 @@ namespace Tank_Dome
             {
                 pictureBox1.Invalidate();
                 Playsound.Play("Sound/prop.wav");          //过关后播放音乐
-                MessageBox.Show("过关!");
+                //过关用时
+                dt2 = System.DateTime.Now;
+                TimeSpan ts = dt2.Subtract(dt1);
+
+                StreamWriter f = new StreamWriter("time.txt");
+                f.WriteLine((ts.TotalMilliseconds/1000).ToString());
+                f.Close();
+                MessageBox.Show("过关用时:" + (ts.TotalMilliseconds/1000).ToString());
                 level++;
                 Nextlevel();
             }
         }
 
-        private void Nextlevel()
+        private void Nextlevel()        //下一关
         {
             if (level > 3)
             {
                 MessageBox.Show("你已经通关!");
+                StreamWriter f = new StreamWriter("time.txt");
+                f.Write("\n");
+                f.Close();
                 this.Hide();
                 begin b = new begin();
                 b.ShowDialog(this);
@@ -300,17 +315,46 @@ namespace Tank_Dome
                 this.Close();
             }
         }
+        private void paixu()
+        {
+            float[] time = new float[4];
+            //StreamReader r = new StreamReader("time.txt");
+            //int i = 0;
+            //float temp;
+            //while(float.TryParse(r.ReadLine(),out time[i]))
+            //{
+            //    i++;
+            //}
+            //r.Close();
 
+            //for(int j = 0; j < 4 - 1; j++)
+            //{
+            //    for(int k = i; k < 4 - 1 - j; k++)
+            //    {
+            //        if (time[k] < time[k + 1])
+            //        { /* 相邻元素比较，若逆序则交换（升序为左大于右，降序反之） */
+            //            temp = time[k];
+            //            time[k] = time[k + 1];
+            //            time[k + 1] = temp;
+            //        }
+            //    }
+            //}
+            StreamWriter f = new StreamWriter("time.txt");
+            f.WriteLine(time[0].ToString());
+            f.WriteLine(time[1].ToString());
+            f.WriteLine(time[2].ToString());
+            f.Close();
+        }
         private void timer1_Tick(object sender, EventArgs e)       //敌方坦克的行动
         {
             foreach (Tank t in eTanks)
             {
-                switch (t.Direct)           //0表示上，1表示下,2表示左,3表示右
+                switch (t.Direct)                           //0表示上,1表示下,2表示左,3表示右
                 {
-                    case 0:                 //向上
+                    case 0:                                 //向上
                     if (t.Top == 0 || Isgo(t.Top - 1,t.Left) == 0
-                    || Meet_Tank(t.Left, t.Top - 1)) //遇到墙砖或坦克
-                        t.newDirect();              //坦克转向
+                    || Meet_Tank(t.Left, t.Top - 1))        //遇到墙砖或坦克
+                        t.newDirect();                      //坦克转向
                     else
                         t.Top--;
                     break;
@@ -323,25 +367,25 @@ namespace Tank_Dome
                         break;
                     case 2:                                 //向左
                         if (t.Left == 0 || Isgo(t.Top,t.Left - 1) == 0
-                         | Meet_Tank(t.Left - 1, t.Top))    //遇 到墙砖或坦克
+                         | Meet_Tank(t.Left - 1, t.Top))    //遇到墙砖或坦克
                             t.newDirect();                  //坦克转向
                         else
                             t.Left--;
                         break;
                     case 3:                                 //向右
                         if (t.Left == 12 || Isgo(t.Top,t.Left + 1) == 0
-                        || Meet_Tank(t.Left + 1, t.Top)) //遇到墙砖或坦克
-                            t.newDirect();            //坦克转向
+                        || Meet_Tank(t.Left + 1, t.Top))    //遇到墙砖或坦克
+                            t.newDirect();                  //坦克转向
                         else
                             t.Left++;
                         break;
                 }
                 Random r = new Random();
-                int fire_bool = r.Next(0, 6);           //0-6
-                if (fire_bool == t.Direct)
+                int fire_bool = r.Next(0, 6);               //0-6
+                if (fire_bool == t.Direct)                  //与坦克的方向一致时发射子弹
                     t.fire();
             }
-            pictureBox1.Invalidate();
+            pictureBox1.Invalidate();                       //重绘游戏画面
         }
 
         private void timer2_Tick(object sender, EventArgs e)    //定时产生新的敌方坦克
@@ -363,7 +407,7 @@ namespace Tank_Dome
                 timer2.Enabled = false;
         }
 
-        private void timer3_Tick(object sender, EventArgs e)
+        private void timer3_Tick(object sender, EventArgs e)    //定时绘制地图
         {
             pictureBox1.Invalidate();
         }

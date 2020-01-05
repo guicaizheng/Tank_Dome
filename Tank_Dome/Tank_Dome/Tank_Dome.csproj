@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Key.cs" />
     <Compile Include="UI\begin.cs">
       <SubType>Form</SubType>
     </Compile>

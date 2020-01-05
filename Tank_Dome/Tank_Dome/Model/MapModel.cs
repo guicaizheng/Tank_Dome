@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tank_Dome.Model
+﻿namespace Tank_Dome.Model
 {
     class MapModel
     {
@@ -61,10 +55,10 @@ namespace Tank_Dome.Model
                         {4,0,0,0,2,0,0,0,2,0,0,0,0},
                         {0,0,1,0,1,0,0,0,1,0,0,4,4},
                         {0,0,0,1,1,1,1,1,1,1,0,0,0},
-                        {0,0,1,1,1,1,1,1,1,1,1,0,0},
+                        {0,0,1,1,1,0,0,0,1,0,0,0,0},
                         {0,0,0,1,1,1,1,1,1,1,0,0,0},
-                        {0,1,1,1,0,0,0,0,0,1,0,0,3},
-                        {3,0,0,1,0,1,1,1,0,0,0,3,3},
+                        {0,1,0,1,0,0,0,0,0,1,0,0,3},
+                        {3,0,0,1,0,1,1,1,0,1,0,3,3},
                         {2,3,0,0,0,1,9,1,0,0,3,3,0}
                     };
                     break;

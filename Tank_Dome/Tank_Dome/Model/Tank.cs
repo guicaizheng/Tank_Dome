@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Tank_Dome.Model;
 
 namespace Tank_Dome
@@ -145,78 +140,78 @@ namespace Tank_Dome
             bList.Add(b);
         }
 
-        public void MoveBullet(ref int[,] Map)
+public void MoveBullet(ref int[,] Map)
+{
+    for (int i = bList.Count - 1; i>= 0; i--)//遍历子弹序列
+    {
+        bullet t = ((bullet)bList[i]);
+        //移动以前
+        if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)//超出边界
         {
-            for (int i = bList.Count - 1; i>= 0; i--)//遍历子弹序列
-            {
-                bullet t = ((bullet)bList[i]);
-                //移动以前
-                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)//超出边界
-                {
-                    bList.RemoveAt(i);
-                    this.buttle_num--;
-                    Playsound.Play("Sound/buttleCrack.wav");
-                    continue;
-                }
-                if (t.hitWall(Map[t.Top, t.Left]))
-                {
-                    bList.RemoveAt(i);
-                    this.buttle_num--;
-                    Playsound.Play("Sound/buttleCrack.wav");
-                    if (Map[t.Top, t.Left] == 9)            //基地爆炸
-                    {
-                        Map[t.Top, t.Left] = 10;
-                    }
-                    else                                    //砖墙被打掉
-                    {
-                        Map[t.Top, t.Left] = 0;
-                    }
-                    continue;
-                }
-                if (Map[t.Top, t.Left] != 0 && Map[t.Top, t.Left] != this.type)
-                {
-                    bList.RemoveAt(i);
-                    this.buttle_num--;
-                    Playsound.Play("Sound/buttleCrack.wav");
-                    if (t.hitE(Map[t.Top, t.Left]))
-                        Map[t.Top, t.Left] = -1;
-                    continue;
-                }
-                t.move();
-
-                //移动以后
-                if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)//超出边界
-                {
-                    bList.RemoveAt(i);
-                    this.buttle_num--;
-                    Playsound.Play("Sound/buttleCrack.wav");
-                    continue;
-                }
-                if (Map[t.Top, t.Left] != 0)//遇到物体
-                {
-                    bList.RemoveAt(i);
-                    this.buttle_num--;
-                    if (t.hitWall(Map[t.Top, t.Left]))
-                    {
-                        Playsound.Play("Sound/buttleCrack.wav");
-                        if (Map[t.Top, t.Left] == 9)            //基地爆炸
-                        {
-                            Map[t.Top, t.Left] = 10;
-                        }
-                        else                                    //砖墙被打掉
-                        {
-                            Map[t.Top, t.Left] = 0;
-                        }
-                    }
-                    else if (t.hitE(Map[t.Top, t.Left]))
-                    {
-                        Map[t.Top, t.Left] = -1;
-                    }
-                    continue;
-                }
-                
-            }
+            bList.RemoveAt(i);
+            this.buttle_num--;
+            Playsound.Play("Sound/buttleCrack.wav");
+            continue;
         }
+        if (t.hitWall(Map[t.Top, t.Left]))
+        {
+            bList.RemoveAt(i);
+            this.buttle_num--;
+            Playsound.Play("Sound/buttleCrack.wav");
+            if (Map[t.Top, t.Left] == 9)            //基地爆炸
+            {
+                Map[t.Top, t.Left] = 10;
+            }
+            else                                    //砖墙被打掉
+            {
+                Map[t.Top, t.Left] = 0;
+            }
+            continue;
+        }
+        if (Map[t.Top, t.Left] != 0 && Map[t.Top, t.Left] != this.type)
+        {
+            bList.RemoveAt(i);
+            this.buttle_num--;
+            Playsound.Play("Sound/buttleCrack.wav");
+            if (t.hitE(Map[t.Top, t.Left]))
+                Map[t.Top, t.Left] = -1;
+            continue;
+        }
+        t.move();
+
+        //移动以后
+        if (t.Left < 0 || t.Left > 12 || t.Top < 0 || t.Top > 12)//超出边界
+        {
+            bList.RemoveAt(i);
+            this.buttle_num--;
+            Playsound.Play("Sound/buttleCrack.wav");
+            continue;
+        }
+        if (Map[t.Top, t.Left] != 0)//遇到物体
+        {
+            bList.RemoveAt(i);
+            this.buttle_num--;
+            if (t.hitWall(Map[t.Top, t.Left]))
+            {
+                Playsound.Play("Sound/buttleCrack.wav");
+                if (Map[t.Top, t.Left] == 9)            //基地爆炸
+                {
+                    Map[t.Top, t.Left] = 10;
+                }
+                else                                    //砖墙被打掉
+                {
+                    Map[t.Top, t.Left] = 0;
+                }
+            }
+            else if (t.hitE(Map[t.Top, t.Left]))
+            {
+                Map[t.Top, t.Left] = -1;
+            }
+            continue;
+        }
+                
+    }
+}
 
         public void DrawBullet(Graphics g, int[,] Map)
         {
